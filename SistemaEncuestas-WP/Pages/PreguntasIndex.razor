@@ -1,0 +1,45 @@
+﻿@page "/preguntasindex"
+@using SistemaEncuestas_WP.Data
+@inject IPreguntaService PService
+
+<PageTitle>Preguntas creadas</PageTitle>
+
+<h1>Index</h1>
+
+<p>Ver todas las preguntas de satisfaccion del cliente creadas</p>
+
+@if(preguntas == null)
+{
+    <p>No existen preguntas aun</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Fecha de creacion</th>
+                <th>Enunciado</th>
+                <th>Nombre del area</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var pregunta in preguntas)
+            {
+                <tr>
+                    <td>@pregunta.FechaCreacion</td>
+                    <td>@pregunta.Pregunta</td>
+                    <td>@pregunta.NombreArea</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Preguntum>? preguntas;
+
+    protected override void OnInitialized()
+    {
+        preguntas = PService.getPreguntas();
+    }
+}
